@@ -17,9 +17,9 @@ class Heap:
             self._mostrar(f'insert({valor})')
 
     def remove_smallest(self, imagen=False):
-        if len(self.arreglo) > 1:               # heap no vacío
+        if len(self.arreglo) > 1:
             ultimo = self.arreglo.pop()
-            if len(self.arreglo) > 1:           # quedan elementos: el último pasa a la raíz
+            if len(self.arreglo) > 1:
                 self.arreglo[1] = ultimo
                 self._hundir(1)
         if imagen:
@@ -46,17 +46,11 @@ class Heap:
     # Imagen del árbol
 
     def _posiciones(self):
-        """Coordenadas (x, y) de cada nodo i = 1..n.
-
-        Cada nivel va debajo del anterior; dentro de un nivel los nodos se
-        reparten en el ancho total, así los hijos izquierdos quedan a la
-        izquierda y los derechos a la derecha, como en la página.
-        """
         n = len(self.arreglo) - 1
         pos = {}
         for i in range(1, n + 1):
-            nivel = i.bit_length() - 1           # raíz = nivel 0
-            indice = i - (1 << nivel)            # posición dentro del nivel
+            nivel = i.bit_length() - 1
+            indice = i - (1 << nivel)
             x = (indice + 0.5) / (1 << nivel)
             pos[i] = (x, -nivel)
         return pos
@@ -75,7 +69,6 @@ class Heap:
             ax.set_ylim(0, 1)
         else:
             pos = self._posiciones()
-            # aristas primero (quedan debajo de los nodos)
             for i in range(2, n + 1):
                 (x0, y0), (x1, y1) = pos[i // 2], pos[i]
                 ax.plot([x0, x1], [y0, y1], color='#555555', linewidth=1.3, zorder=1)
